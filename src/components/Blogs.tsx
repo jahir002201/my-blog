@@ -14,9 +14,12 @@ export default function Blogs() {
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
 
   useEffect(() => {
-    fetch('/api/blogs')
+    setLoading(true);
+    fetch(`/api/blogs?page=${page}&limit=10`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -24,14 +27,15 @@ export default function Blogs() {
         return response.json();
       })
       .then((data) => {
-        setBlogs(data);
+        setBlogs(data.posts);
+        setTotalPages(data.totalPages);
         setLoading(false);
       })
       .catch((error) => {
         setError(error.message);
         setLoading(false);
       });
-  }, []);
+  }, [page]);
 
   if (loading) return <p className="text-center py-10">Loading...</p>;
 
@@ -53,6 +57,23 @@ export default function Blogs() {
             </Link>
           </article>
         ))}
+      </div>
+      <div className="flex justify-center mt-8">
+        <button 
+          onClick={() => setPage(page => Math.max(page - 1, 1))} 
+          disabled={page === 1} 
+          className="px-4 py-2 mx-1 bg-gray-200 rounded-lg hover:bg-gray-300 disabled:opacity-50"
+        >
+          Previous
+        </button>
+        <span className="px-4 py-2 mx-1">{`Page ${page} of ${totalPages}`}</span>
+        <button 
+          onClick={() => setPage(page => Math.min(page + 1, totalPages))} 
+          disabled={page === totalPages} 
+          className="px-4 py-2 mx-1 bg-gray-200 rounded-lg hover:bg-gray-300 disabled:opacity-50"
+        >
+          Next
+        </button>
       </div>
     </section>
   );
