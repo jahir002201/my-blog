@@ -11,7 +11,7 @@ interface BlogPost {
 }
 
 export default function BlogPostPage() {
-  const { id } = useParams(); // useParams to get the dynamic [id] from the URL
+  const { id } = useParams();
   const [blogPost, setBlogPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -77,15 +77,15 @@ export default function BlogPostPage() {
 
   return (
     <main>
-      <article className="prose lg:prose-xl mx-auto bg-white p-8 rounded-lg shadow-lg my-10">
-        <h1 className="text-4xl font-bold mb-4">{blogPost.title}</h1>
-        <p className="text-gray-600 mb-4">
-          By <span className="font-semibold">{blogPost.author}</span> on {new Date(blogPost.date_published).toLocaleDateString()}
-        </p>
-        <div className="text-lg leading-relaxed">
-          {blogPost.content}
-        </div>
-      </article>
+    <article className="prose lg:prose-xl mx-auto bg-white p-8 rounded-lg shadow-lg my-10">
+      <h1 className="text-4xl font-bold mb-4">{blogPost.title}</h1>
+      <p className="text-gray-600 mb-4">
+        By <span className="font-semibold">{blogPost.author}</span> on {new Date(blogPost.date_published).toLocaleDateString()}
+      </p>
+      <div className="text-lg leading-relaxed">
+        {blogPost.content}
+      </div>
+    </article>
     </main>
   );
 }
