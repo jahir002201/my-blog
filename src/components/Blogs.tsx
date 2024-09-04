@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 interface BlogPost {
   id: number;
@@ -47,13 +48,9 @@ export default function Blogs() {
               By <span className="font-semibold">{post.author}</span> on <time dateTime={post.date_published}>{new Date(post.date_published).toLocaleDateString()}</time>
             </p>
             <p className="text-gray-700 mb-4">{post.content.slice(0, 150)}{post.content.length > 150 ? '...' : ''}</p>
-            <a
-              href={`/blog/${post.id}`}
-              className="inline-block text-blue-600 hover:text-blue-800 font-medium"
-              aria-label={`Read more about ${post.title}`}
-            >
+            <Link href={`/blog/${post.id}`} className="inline-block text-blue-600 hover:text-blue-800 font-medium" aria-label={`Read more about ${post.title}`}>
               Read more
-            </a>
+            </Link>
           </article>
         ))}
       </div>
