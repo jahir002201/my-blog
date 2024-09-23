@@ -7,6 +7,7 @@ export default function Home() {
     <Hero/>
     {/* blog section */}
     <Blogs/>
+    {/* other sections */}
     </main>
   );
 }
